@@ -1,0 +1,9 @@
+dotenv
+express
+mongoose
+bcryptjs
+jsonwebtoken
+validator
+nodemailer
+cookie-parser
+body-parser
