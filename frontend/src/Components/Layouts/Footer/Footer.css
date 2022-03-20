@@ -1,0 +1,55 @@
+html{
+    box-sizing: border-box;
+}
+
+*,*::before,::after{
+    box-sizing: inherit;
+    padding: 0;
+    margin: 0;
+}
+body{
+    padding: 0;
+    margin: 0;
+}
+h1,h2,h3{
+    margin: 0;
+    padding: 0;
+}
+
+img{
+    width: 100%;
+}
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: row wrap;
+    background-color: rgb(15, 10, 58);
+    padding: 1rem;
+}
+.item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
+    margin: 0rem 1rem;
+}
+.item li{
+    margin: 0px 10px;
+}
+.item li a{
+    color: rgb(245, 237, 237);
+    margin: 0px 10px;
+}
+h1 a{
+    color: rgb(245, 237, 237);
+    font-size: 1rem;
+    padding: 0;
+}
