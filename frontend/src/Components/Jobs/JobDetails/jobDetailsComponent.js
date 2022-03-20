@@ -28,7 +28,7 @@ const JobDetailsComponent = () => {
                         <div className="row" style={{ margin: "0px" }}>
                             <div className="col">
                                 <div className="d-flex justify-content-between" style={{ padding: "5px", marginBottom: "8px" }}>
-                                    <h1 className="text-center d-inline">{job.companyName}</h1><a className="link-dark" href="www.google.com"><i className="fa fa-location-arrow fs-5"></i></a>
+                                    <h1 className="text-center d-inline">{job.companyName}</h1><a className="link-dark" href="https://www.google.com" target={'_blank'}><i className="fa fa-location-arrow fs-5"></i></a>
                                 </div>
                                 <div style={{ padding: "5px", background: "var(--bs-yellow)", borderRadius: "4px", marginBottom: "8px" }}><label className="form-label"><strong>About</strong></label>
                                     <p>{job.companyDescription}</p>
