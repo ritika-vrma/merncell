@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ALL_JOB_REQUEST, ALL_JOB_SUCCESS, ALL_JOB_FAIL, CLEAR_ERRORS, JOB_DETAILS_REQUEST, JOB_DETAILS_SUCCESS, JOB_DETAILS_FAIL } from "../constants/jobConstants";
+import { ALL_JOB_REQUEST, ALL_JOB_SUCCESS, ALL_JOB_FAIL, CLEAR_ERRORS, JOB_DETAILS_REQUEST, JOB_DETAILS_SUCCESS, JOB_DETAILS_FAIL, changeComponent } from "../constants/jobConstants";
 
 export const getAllJobs = () => async (dispatch) => {
     try {
@@ -50,3 +50,10 @@ export const getJobDetails = (id) => async (dispatch) => {
         });
     }
 };
+
+// export const changeLoginSignUp = (component) => async (dispatch) => {
+//     dispatch({
+//         type: changeComponent,
+//         payload: component
+//     });
+// };

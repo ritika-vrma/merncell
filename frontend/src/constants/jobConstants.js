@@ -6,3 +6,5 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS"
 export const JOB_DETAILS_REQUEST = "JOB_DETAILS_REQUEST"
 export const JOB_DETAILS_SUCCESS = "JOB_DETAILS_SUCCESS"
 export const JOB_DETAILS_FAIL = "JOB_DETAILS_FAIL"
+
+// export const changeComponent ="changeComponent";

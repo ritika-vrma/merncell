@@ -15,7 +15,7 @@ const JobDetailsComponent = () => {
     useEffect(() => {
         if (error) {
             alert.error(error);
-            dispatch(clearErrors());
+            return dispatch(clearErrors());
         }
         dispatch(getJobDetails(params.id));
     }, [dispatch, params.id, alert, error]);

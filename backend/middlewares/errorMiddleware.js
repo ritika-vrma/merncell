@@ -13,8 +13,9 @@ module.exports = (err, req, res, next) => {
 
     // Mongoose Duplicate Key Error
     if (err.code === 11000) {
-        const msg = `Email Already Exist, Pls login or Create new account: ${Object.keys(err.keyValue)}`;
+        const msg = `${Object.keys(err.keyValue)} Already Exist`;
         err = new ErrorHandler(msg, 400);
+
     }
 
     // Wrong JWT Token

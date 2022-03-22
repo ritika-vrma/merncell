@@ -6,7 +6,13 @@ const crypto = require('crypto');
 
 const studentSchema = new mongoose.Schema({
 
-    name: {
+    firstName: {
+        type: String,
+        required: [true, "Please Enter your name"],
+        maxlength: [30, "Name cannot exceed 30 character"],
+        minlength: [4, "Name should have more than 4 characters"]
+    },
+    lastName: {
         type: String,
         required: [true, "Please Enter your name"],
         maxlength: [30, "Name cannot exceed 30 character"],
@@ -14,13 +20,19 @@ const studentSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, "Please Enter your Emal"],
+        required: [true, "Please Enter your Email"],
         unique: true,
         validate: [validator.isEmail, "Please Enter a Valid Email"]
     },
     password: {
         type: String,
         required: [true, "Please Enter Password"],
+        minlength: [8, "Password should have more than 8 characters"],
+        select: false
+    },
+    confirmPassword: {
+        type: String,
+        required: [true, "Please Confirm Password"],
         minlength: [8, "Password should have more than 8 characters"],
         select: false
     },
@@ -38,11 +50,11 @@ const studentSchema = new mongoose.Schema({
         maxlength: [10, "Phone Cannot exceed 10 digits"],
         minlength: [9, "Phone Cannot be less than 10 digits"]
     },
-    alternativePhone: {
-        type: Number,
-        maxlength: [10, "Phone Cannot exceed 10 digits"],
-        minlength: [9, "Phone Cannot be less than 10 digits"]
-    },
+    // alternativePhone: {
+    //     type: Number,
+    //     maxlength: [10, "Phone Cannot exceed 10 digits"],
+    //     minlength: [9, "Phone Cannot be less than 10 digits"]
+    // },
     classIn: {
         type: String,
         required: true
@@ -72,12 +84,10 @@ const studentSchema = new mongoose.Schema({
         required: true
     },
     objective: {
+        required: true,
         type: String
     },
     experience: {
-        type: String
-    },
-    achievements: {
         type: String
     },
     projects: {

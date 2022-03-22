@@ -4,20 +4,61 @@ const Student = require('../models/studentModel');
 const sendToken = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
+const cloudinary = require("cloudinary");
 
 // Register  Student
 
 exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: "avatars",
+        width: 150,
+        crop: "scale",
+    });
+    const { firstName,
+        lastName,
+        email,
+        phone,
+        password,
+        confirmPassword,
+        fathersName,
+        address,
+        classIn,
+        year,
+        classRollNo,
+        universityRollno,
+        class10,
+        class12,
+        graduation,
+        projects,
+        about,
+        objective,
+        experience, } = req.body;
 
-    const { name, email, password, phone, alternativePhone, objective, projects, classIn, year, fathersName, class10, class12, graduation, about, experience, classRollNo, universityRollno } = req.body;
 
     const student = await Student.create({
-        name, email, password,
         avatar: {
-            public_id: "Sample ID",
-            url: "Profile pic URL"
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url,
         },
-        phone, alternativePhone, objective, projects, classIn, year, fathersName, class10, class12, graduation, about, experience, classRollNo, universityRollno
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+        confirmPassword,
+        fathersName,
+        address,
+        classIn,
+        year,
+        classRollNo,
+        universityRollno,
+        class10,
+        class12,
+        graduation,
+        projects,
+        about,
+        objective,
+        experience,
     });
 
     sendToken(student, 201, res);

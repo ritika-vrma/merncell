@@ -13,11 +13,11 @@ const Home = () => {
     const dispatch = useDispatch();
 
     const { loading, error, jobs, jobsCount } = useSelector((state) => state.jobReducer);
-    console.log(jobsCount);
     useEffect(() => {
         if (error) {
             alert.error(error);
-            dispatch(clearErrors);
+            console.log("error itho aa rha hai");
+            return dispatch(clearErrors);
         }
         dispatch(getAllJobs());
     }, [dispatch, error, alert]);
