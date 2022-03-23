@@ -89,6 +89,10 @@ class ApiFeatures {
 
     }
 
+    // sort(){
+    //     const lastDateToApply = 
+    // }
+
 };
 
 module.exports = ApiFeatures;

@@ -11,6 +11,7 @@ import LoginComponent from './Components/User/LoginSignUp/LoginComponent';
 import SignUpComponent from './Components/User/LoginSignUp/SignUpComponent';
 import store from './store';
 import { loadStudent } from './actions/studentAction';
+import CreateJob from './Components/Jobs/createJob/CreateJob';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
         <Route exact path='/job/:id' element={<JobDetailsComponent />} />
         <Route exact path='/login' element={<LoginComponent />} />
         <Route exact path='/register' element={<SignUpComponent />} />
+        <Route exact path='/new/job' element={<CreateJob />} />
       </Routes>
       <Footer />
     </Router>

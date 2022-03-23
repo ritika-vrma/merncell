@@ -83,6 +83,7 @@ const SignUpComponent = () => {
                 dispatch(clearErrors);
             }
             dispatch(registerStudent(myForm));
+            
         } else {
             return alert.error("Password and Confirm Password is not same");
         }

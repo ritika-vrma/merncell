@@ -1,13 +1,38 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
+
 var date = new Date();
 const jobsSchema = new mongoose.Schema({
     companyName: {
         type: String,
         required: [true, "Please Enter Your Company Name"],
     },
-    companyDescription: {
+    companyEmail: {
         type: String,
-        required: [true, "Please Enter Company Description"]
+        required: [true, "Please Enter Email"],
+        validate: [validator.isEmail, "Please Enter a Valid Email"]
+    },
+    companyContactPerson: {
+        type: String,
+        required: [true, "Please Enter Company Contact Person"]
+    },
+    contactPersonPhone: {
+        type: Number,
+        required: true,
+        maxlength: [10, "Phone Cannot exceed 10 digits"],
+        minlength: [9, "Phone Cannot be less than 10 digits"]
+    },
+    CompanyWebsite: {
+        type: String,
+        required: [true, "Please Enter Company Website"]
+    },
+    companyAddress: {
+        type: String,
+        required: [true, "Please Enter Company Address"]
+    },
+    companyAbout: {
+        type: String,
+        required: [true, "Please Enter About Company"]
     },
     jobRole: {
         type: String,
@@ -16,6 +41,10 @@ const jobsSchema = new mongoose.Schema({
     jobDescription: {
         type: String,
         required: [true, "Please Enter Job Description"]
+    },
+    skillsRequired: {
+        type: String,
+        required: [true, "Please Enter Skills Required"]
     },
     eligibility: [
         {
@@ -44,13 +73,13 @@ const jobsSchema = new mongoose.Schema({
     additionalDetails: {
         type: String,
     },
-    candidateRequired: {
+    candidatesRequired: {
         type: Number,
         required: [true, "Please Enter How Many Candidates you want to hire"],
         maxLength: [4, "Candidate Required Cannot exceed 4 digits"],
         default: 6
     },
-    salaryType:[
+    salaryType: [
         {
             type: String,
             required: [true, "Please Enter Salary Type"]
@@ -66,10 +95,10 @@ const jobsSchema = new mongoose.Schema({
     docsRequiredAtJoining: {
         type: String
     },
-    lastDateToApply:{
-        type:Date,
-        default:date.setDate(date.getDate() + 7),
-        required:true
+    lastDateToApply: {
+        type: Date,
+        default: date.setDate(date.getDate() + 7),
+        required: true
     },
     approve_reject: {
         type: String,
@@ -91,17 +120,3 @@ const jobsSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Job", jobsSchema);
-
-// {
-//     "comapnyName":"TCS",
-//     "companyDescription":"TCS Limited is an Indian multinational information technology company that provides business consulting, information technology and outsourcing services. ",
-//     "jobRole":"Software Engineer",
-//     "jobDescription":"As a software engineer, you'll work in a constantly evolving environment, due to technological advances and the strategic direction of the organisation you work for. You'll create, maintain, audit and improve systems to meet particular needs, often as advised by a systems analyst or architect, testing both hard and software systems to diagnose and resolve system faults.",
-//     "eligibility":"BCA",
-//     "additionalDetails":"no additional Details to show",
-//     "candidateRequired":90,
-//     "salaryPA":1000000,
-//     "docsRequiredAtInterview":"Resume Hardcopies 2",
-//     "docsRequiredAtJoining":"something joining docs"
-    
-// }

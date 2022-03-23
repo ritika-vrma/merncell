@@ -8,6 +8,7 @@ const ApiFeatures = require('../utils/apiFeatures');
 exports.createJob = catchAsyncErrors(async (req, res, next) => {
 
 
+    console.log(req.body);
     const job = await Job.create(req.body);
 
     res.status(201).json({
@@ -23,7 +24,7 @@ exports.getAllJobs = catchAsyncErrors(async (req, res) => {
 
     // Filter for Eligibility : either BCOM / BCA or any other
     // Search for any keyword for company Name
-    const resultPerPage = 8;
+    // const resultPerPage = 50;
     const jobsCount = await Job.countDocuments();
 
     const apiFeature = new ApiFeatures(Job.find(), req.query)
@@ -31,8 +32,8 @@ exports.getAllJobs = catchAsyncErrors(async (req, res) => {
         .filter()
         .eligibilityOR()
         .classOR()
-        .jobTypeOR()
-        .pagination(resultPerPage);
+        .jobTypeOR();
+    // .pagination(resultPerPage);
     const jobs = await apiFeature.query;
 
     res.status(200).json({
@@ -98,19 +99,19 @@ exports.getJobDetails = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getEligibleJobs = catchAsyncErrors(async (req, res) => {
-    const resultPerPage = 8;
+    // const resultPerPage = 8;
     const jobsCount = await Job.countDocuments();
 
     req.query.class = [req.student.classIn];
     req.query.approve_reject = ['Approved'];
-    const apiFeature = new ApiFeatures(Job.find(), req.query)
+    const apiFeature = new ApiFeatures(Job.find({ lastDateToApply: { $gte: new Date() } }).sort({ createdAt: -1 }), req.query)
         .search()
         .filter()
         .eligibilityOR()
         .classOR()
         .jobTypeOR()
-        .isApprovedJob()
-        .pagination(resultPerPage);
+        .isApprovedJob();
+    // .pagination(resultPerPage);
     const jobs = await apiFeature.query;
 
     // const jobs = await Job.find({ "class": req.student.classIn });
@@ -121,5 +122,3 @@ exports.getEligibleJobs = catchAsyncErrors(async (req, res) => {
         jobs
     });
 });
-
-// Create New 

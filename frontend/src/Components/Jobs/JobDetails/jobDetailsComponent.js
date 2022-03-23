@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import './jobDetailsComponent.css';
 import { clearErrors, getJobDetails } from '../../../actions/jobAction';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Loader from '../../Layouts/Loader/Loader';
 import { useAlert } from 'react-alert';
 
@@ -10,19 +10,27 @@ const JobDetailsComponent = () => {
     const alert = useAlert();
     const dispatch = useDispatch();
     const params = useParams();
+    const navigate = useNavigate();
 
     const { loading, error, job } = useSelector((state) => state.jobDetailsReducer);
+    const { isAuthenticated } = useSelector((state) => state.studentReducer);
+
+    const lastDateToApply = new Date(job.lastDateToApply).toDateString();
     useEffect(() => {
         if (error) {
             alert.error(error);
             return dispatch(clearErrors());
         }
-        dispatch(getJobDetails(params.id));
-    }, [dispatch, params.id, alert, error]);
+        if (isAuthenticated) {
+            dispatch(getJobDetails(params.id));
+        } else {
+            navigate('/login', { replace: true });
+        }
+    }, [dispatch, params.id, alert, error, isAuthenticated, navigate]);
 
     return (
         <Fragment>
-            {loading ? <Loader /> :
+            {job && loading ? <Loader /> :
                 <div className="container">
                     <div className="shadow" style={{ marginBottom: "81px" }}>
                         <div className="row" style={{ margin: "0px" }}>
@@ -50,7 +58,7 @@ const JobDetailsComponent = () => {
                                 <div style={{ marginBottom: "8px", padding: "5px" }}>
                                     <h1>{job.jobRole}</h1>
                                 </div>
-                                <div className="text-end"><span style={{ margin: "5px" }}>Last Date To Apply</span><span className="text-danger" style={{ margin: "5px" }}><strong>25/04/2022</strong></span></div>
+                                <div className="text-end"><span style={{ margin: "5px" }}>Last Date To Apply</span><span className="text-danger" style={{ margin: "5px" }}><strong>{lastDateToApply}</strong></span></div>
                                 <div style={{ marginBottom: "8px", padding: "5px" }}>
                                     <div className="row">
                                         <div className="col" style={{ background: "var(--bs-gray-300)" }}>
@@ -101,7 +109,9 @@ const JobDetailsComponent = () => {
                                 <div className="text-center" style={{ padding: "8px" }}>
                                     <div className="form-check form-check-inline"><input className="form-check-input" type="checkbox" id="formCheck-1" /><label className="form-check-label" htmlFor="formCheck-1">I Agree to the {'\u00A0'},<a href="www.google.com">terms & Conditions</a></label></div>
                                 </div>
-                                <div className="text-center" style={{ padding: "8px" }}><button className="btn btn-outline-primary" type="button" style={{ width: "121.5px" }}>Apply Now</button></div>
+                                <div className="text-center" style={{ padding: "8px" }}>
+                                    <button disabled={!isAuthenticated} className="btn btn-outline-primary" type="button" style={{ width: "121.5px" }}>Apply Now</button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../Layouts/Loader/Loader';
 import { useAlert } from 'react-alert';
 
+
 const Home = () => {
 
     const alert = useAlert();
@@ -13,14 +14,15 @@ const Home = () => {
     const dispatch = useDispatch();
 
     const { loading, error, jobs, jobsCount } = useSelector((state) => state.jobReducer);
+    const { isAuthenticated } = useSelector((state) => state.studentReducer);
     useEffect(() => {
         if (error) {
             alert.error(error);
-            console.log("error itho aa rha hai");
             return dispatch(clearErrors);
         }
-        dispatch(getAllJobs());
-    }, [dispatch, error, alert]);
+        dispatch(getAllJobs(isAuthenticated));
+
+    }, [dispatch, error, alert, isAuthenticated]);
 
 
     return (
@@ -32,9 +34,10 @@ const Home = () => {
                     <div className="container">
                         <div>
                             <div className="row justify-content-center align-items-center">
-                                {jobs && jobs.map((job) => (
-                                    <JobComponent job={job} key={job._id} />
-                                ))}
+                                {jobs && jobs.map((job) => {
+                                    const lastDateToApply = new Date(job.lastDateToApply).toDateString();
+                                    return (<JobComponent job={job} key={job._id} lastDateToApply={lastDateToApply} />);
+                                })}
 
                             </div>
                         </div>
