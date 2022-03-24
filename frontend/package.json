@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@material-ui/lab": "^4.0.0-alpha.60",
+    "@mui/icons-material": "^5.5.1",
+    "@mui/material": "^5.5.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -49,5 +54,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.137.1:4000"
+  "proxy": "http://192.168.1.68:8000/ "
 }

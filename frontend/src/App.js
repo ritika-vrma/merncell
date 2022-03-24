@@ -12,8 +12,12 @@ import SignUpComponent from './Components/User/LoginSignUp/SignUpComponent';
 import store from './store';
 import { loadStudent } from './actions/studentAction';
 import CreateJob from './Components/Jobs/createJob/CreateJob';
+import { useSelector } from 'react-redux';
+import UserOptions from './Components/Layouts/UserOptions/UserOptions.js'
 
 function App() {
+
+  const {isAuthenticated,student,error} = useSelector((state)=> state.studentReducer)
 
   React.useEffect(() => {
     webFont.load({
@@ -27,6 +31,7 @@ function App() {
   return (
     <Router>
       <Navbar />
+      {isAuthenticated && <UserOptions isAuthenticated={isAuthenticated} error={error} student = {student}/>}
       <Routes>
         <Route exact path='/' element={<Home />} />
         <Route exact path='/job/:id' element={<JobDetailsComponent />} />

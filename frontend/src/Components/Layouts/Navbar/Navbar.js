@@ -10,7 +10,7 @@ const Navbar = () => {
   const alert = useAlert();
   const { error, isAuthenticated } = useSelector((state) => state.studentReducer);
 
-  const logoutMe = (e) => {
+  const logoutMe = () => {
     if (error) {
       alert.error(error);
     }
