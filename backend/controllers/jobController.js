@@ -8,7 +8,6 @@ const ApiFeatures = require('../utils/apiFeatures');
 exports.createJob = catchAsyncErrors(async (req, res, next) => {
 
 
-    console.log(req.body);
     const job = await Job.create(req.body);
 
     res.status(201).json({
@@ -104,6 +103,7 @@ exports.getEligibleJobs = catchAsyncErrors(async (req, res) => {
 
     req.query.class = [req.student.classIn];
     req.query.approve_reject = ['Approved'];
+    console.log(req);
     const apiFeature = new ApiFeatures(Job.find({ lastDateToApply: { $gte: new Date() } }).sort({ createdAt: -1 }), req.query)
         .search()
         .filter()

@@ -5,6 +5,7 @@ import { registerStudent, clearErrors } from '../../../actions/studentAction';
 import { useAlert } from 'react-alert';
 import Loader from '../../Layouts/Loader/Loader';
 import { createNewJob } from '../../../actions/jobAction';
+import Metadata from '../../Layouts/Metadata';
 
 const CreateJob = () => {
     const dispatch = useDispatch();
@@ -179,6 +180,7 @@ const CreateJob = () => {
 
     return (
         <Fragment>
+            <Metadata title="Post Job" />
             <div className="container">
                 <div className="row g-0 text-center d-flex">
                     <div className="col">

@@ -1,7 +1,8 @@
 import {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL, CLEAR_ERRORS, REGISTER_STUDENT_REQUEST, REGISTER_STUDENT_SUCCESS,
     REGISTER_STUDENT_FAIL, LOAD_STUDENT_REQUEST, LOAD_STUDENT_SUCCESS, LOAD_STUDENT_FAIL,
-    LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAIL
+    LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAIL,
+    UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_RESET, UPDATE_PROFILE_FAIL
 } from "../constants/studentConstants";
 
 export const studentReducer = ((state = { student: {} }, action) => {
@@ -41,6 +42,42 @@ export const studentReducer = ((state = { student: {} }, action) => {
                 isAuthenticated: false,
                 student: null,
                 error: action.payload
+            };
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            };
+
+        default:
+            return state;
+    }
+
+});
+export const updateStudentProfileReducer = ((state = {}, action) => {
+
+    switch (action.type) {
+        case UPDATE_PROFILE_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+        case UPDATE_PROFILE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isUpdated: action.payload,
+            };
+        case UPDATE_PROFILE_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
+        case UPDATE_PROFILE_RESET:
+            return {
+                ...state,
+                isUpdated: false
             };
         case CLEAR_ERRORS:
             return {

@@ -16,7 +16,7 @@ import './UserOption.css';
 
 const UserOptions = ({ student, isAuthenticated, error }) => {
     const navigate = useNavigate();
-    const [open, setOpen] = useState();
+    const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const alert = useAlert();
 
@@ -32,6 +32,7 @@ const UserOptions = ({ student, isAuthenticated, error }) => {
         }
         if (isAuthenticated) {
             alert.success("You have Logged Out Successfully.");
+            navigate('/login', { replace: true });
             dispatch(logout());
         }
     };

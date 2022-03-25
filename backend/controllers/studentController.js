@@ -11,17 +11,17 @@ const cloudinary = require("cloudinary");
 exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
     const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
         folder: "avatars",
-        width: 150,
-        crop: "scale",
+        width: 200,
+        height: 200,
+        crop: "fill",
+        gravity: "face"
     });
     const { firstName,
         lastName,
         email,
         phone,
         password,
-        confirmPassword,
         fathersName,
-        address,
         classIn,
         year,
         classRollNo,
@@ -32,7 +32,12 @@ exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
         projects,
         about,
         objective,
-        experience, } = req.body;
+        experience,
+        dateOfBirth,
+        skills,
+        linkedInURL,
+        socialLink,
+        address } = req.body;
 
 
     const student = await Student.create({
@@ -45,7 +50,6 @@ exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
         email,
         phone,
         password,
-        confirmPassword,
         fathersName,
         address,
         classIn,
@@ -59,7 +63,22 @@ exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
         about,
         objective,
         experience,
+        dateOfBirth,
+        skills,
+        linkedInURL,
+        socialLink,
+        address
     });
+
+    try {
+        await sendEmail({
+            email: student.email,
+            subject: `D.A.V. College, Jalandhar, Placement Cell`,
+            message: `Dear ${student.firstName} ${student.lastName}, \nThank you for Registering with D.A.V. College, Jalandhar Placement Cell`,
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
 
     sendToken(student, 201, res);
 
@@ -222,14 +241,76 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 // Update Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
-    const { name, email, classIn, year, fathersName, phone, alternativePhone, class10, class12, graduation, about, objective, experience, projects, classRollNo, universityRollno } = req.body;
+    const {
+        firstName,
+        lastName,
+        email,
+        phone,
+        fathersName,
+        classIn,
+        year,
+        classRollNo,
+        universityRollno,
+        class10,
+        class12,
+        graduation,
+        projects,
+        about,
+        objective,
+        experience,
+        dateOfBirth,
+        skills,
+        linkedInURL,
+        socialLink,
+        address,
+        avatar
+    } = req.body;
 
     const newStudentData = {
-        name, email, classIn, year, fathersName,
-        phone, alternativePhone, class10, class12,
-        graduation, about, objective, experience,
-        projects, classRollNo, universityRollno
+        firstName,
+        lastName,
+        email,
+        phone,
+        fathersName,
+        classIn,
+        year,
+        classRollNo,
+        universityRollno,
+        class10,
+        class12,
+        graduation,
+        projects,
+        about,
+        objective,
+        experience,
+        dateOfBirth,
+        skills,
+        linkedInURL,
+        socialLink,
+        address,
+        avatar
     };
+
+    if (req.body.avatar !== "") {
+        const student = await Student.findById(req.student.id);
+
+        const imgID = student.avatar.public_id;
+
+        await cloudinary.v2.uploader.destroy(imgID);
+
+        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: "avatars",
+            width: 200,
+            height: 200,
+            crop: "fill",
+            gravity: "face"
+        });
+
+        newStudentData.avatar = {
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url,
+        };
+    }
 
     const student = await Student.findByIdAndUpdate(req.student.id, newStudentData, {
         new: true,
@@ -239,7 +320,6 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        student
     });
 
 });

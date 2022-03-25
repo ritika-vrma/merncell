@@ -2,12 +2,13 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { jobDetailsReducer, jobReducer } from './reducers/jobReducer';
-import { studentReducer } from './reducers/studentReducer';
+import { studentReducer, updateStudentProfileReducer } from './reducers/studentReducer';
 
 const reducer = combineReducers({
     jobReducer: jobReducer,
     jobDetailsReducer: jobDetailsReducer,
-    studentReducer: studentReducer
+    studentReducer: studentReducer,
+    updateStudentProfileReducer: updateStudentProfileReducer
 
 });
 

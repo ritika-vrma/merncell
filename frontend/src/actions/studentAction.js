@@ -1,7 +1,8 @@
 import {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL, CLEAR_ERRORS, REGISTER_STUDENT_REQUEST, REGISTER_STUDENT_SUCCESS,
     REGISTER_STUDENT_FAIL, LOAD_STUDENT_REQUEST, LOAD_STUDENT_SUCCESS, LOAD_STUDENT_FAIL,
-    LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAIL
+    LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAIL,
+    UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_RESET, UPDATE_PROFILE_FAIL
 } from "../constants/studentConstants";
 import axios from 'axios';
 import { getAllJobs } from "./jobAction";
@@ -75,6 +76,23 @@ export const logout = () => async (dispatch) => {
 
         dispatch({
             type: LOGOUT_FAIL,
+            payload: error.response.data.message
+        });
+    }
+};
+
+export const updateStudentProfile = (studentData) => async (dispatch) => {
+
+    try {
+        dispatch({ type: UPDATE_PROFILE_REQUEST });
+
+        const config = { headers: { "Content-Type": "multipart/form-data" } };
+        const { data } = await axios.put(`/api/v1/me/update`, studentData, config);
+        dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.success });
+
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PROFILE_FAIL,
             payload: error.response.data.message
         });
     }

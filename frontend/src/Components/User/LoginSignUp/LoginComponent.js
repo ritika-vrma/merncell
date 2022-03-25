@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { login, clearErrors } from '../../../actions/studentAction';
 import { useAlert } from 'react-alert';
 import Loader from '../../Layouts/Loader/Loader';
+import Metadata from '../../Layouts/Metadata';
 
 const LoginComponent = () => {
 
@@ -28,13 +29,14 @@ const LoginComponent = () => {
             dispatch(clearErrors);
         }
         if (isAuthenticated) {
-            navigate('/account', { replace: true })
+            navigate('/account', { replace: true });
         }
-    }, [dispatch, error, alert, isAuthenticated,navigate]);
+    }, [dispatch, error, alert, isAuthenticated, navigate]);
 
 
     return (
         <Fragment>
+            <Metadata title="Login" />
             {loading ? <Loader /> :
                 <div className="container shadow-lg">
                     <div className="row align-items-center">

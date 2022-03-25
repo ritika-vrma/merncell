@@ -30,12 +30,6 @@ const studentSchema = new mongoose.Schema({
         minlength: [8, "Password should have more than 8 characters"],
         select: false
     },
-    confirmPassword: {
-        type: String,
-        required: [true, "Please Confirm Password"],
-        minlength: [8, "Password should have more than 8 characters"],
-        select: false
-    },
     avatar: {
         public_id: {
             type: String
@@ -91,6 +85,24 @@ const studentSchema = new mongoose.Schema({
         type: String
     },
     projects: {
+        type: String
+    },
+    skills: {
+        type: String
+    },
+    address: {
+        type: String
+    },
+    dateOfBirth: {
+        type: Date
+    },
+    linkedInURL: {
+        type: String
+    },
+    socialLink: {
+        type: String
+    },
+    skills: {
         type: String
     },
     classRollNo: {

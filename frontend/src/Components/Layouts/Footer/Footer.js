@@ -12,7 +12,7 @@ const Footer = () => {
           <li><a href="/">Footer</a></li>
         </ul>
       </div>
-      <div><h1 className='item'><a href="/">D.A.V. Placement Cell</a></h1></div>
+      <div><h1 className='item'><Link to="/">D.A.V. Placement Cell</Link></h1></div>
       <div>
         <ul className='item'>
           <li><a href="/">Footer</a></li>
@@ -20,7 +20,7 @@ const Footer = () => {
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

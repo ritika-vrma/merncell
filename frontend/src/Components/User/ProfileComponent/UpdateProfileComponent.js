@@ -1,100 +1,119 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { registerStudent, clearErrors } from '../../../actions/studentAction';
+import { clearErrors, loadStudent, updateStudentProfile } from '../../../actions/studentAction';
 import { useAlert } from 'react-alert';
 import Loader from '../../Layouts/Loader/Loader';
 import Metadata from '../../Layouts/Metadata';
+import { UPDATE_PROFILE_RESET } from '../../../constants/studentConstants';
 
-const SignUpComponent = () => {
+const UpdateProfileComponent = () => {
 
     const dispatch = useDispatch();
     const alert = useAlert();
     const navigate = useNavigate();
 
-    const { error, loading, student, isAuthenticated } = useSelector((state) => state.studentReducer);
+    const { student, isAuthenticated } = useSelector((state) => state.studentReducer);
+    const { error, isUpdated, loading } = useSelector((state) => state.updateStudentProfileReducer);
 
     useEffect(() => {
         if (error) {
             alert.error(error);
             dispatch(clearErrors);
         }
-        if (isAuthenticated) {
+        if (isUpdated) {
+            alert.success("Profile Updated Successfully");
+            dispatch(loadStudent());
+
             navigate('/account', { replace: true });
+
+            dispatch({
+                type: UPDATE_PROFILE_RESET,
+            });
         }
-    }, [dispatch, error, alert, isAuthenticated, navigate]);
+
+    }, [dispatch, error, alert, navigate, isUpdated]);
+
+    // Convert the date to YYYY-MM-DD
+    let DOB = "";
+    if (student) {
+        try {
+            DOB = new Date(student.dateOfBirth).toISOString().slice(0, 10);
+        } catch (error) {
+            DOB = "1999-01-01";
+        }
+    }
+
 
     const [user, setUser] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        password: "",
-        confirmPassword: "",
-        fathersName: "",
-        address: "",
-        classIn: "",
-        year: "",
-        classRollNo: "",
-        universityRollno: "",
-        class10: "",
-        class12: "",
-        graduation: "",
-        projects: "",
-        about: "",
-        objective: "",
-        experience: "",
-        skills: "",
-        dateOfBirth: "",
-        linkedInURL: "",
-        socialLink: "",
-        agree: ""
+        firstName: student.firstName,
+        lastName: student.lastName,
+        email: student.email,
+        phone: student.phone,
+        fathersName: student.fathersName,
+        address: student.address,
+        classIn: student.classIn,
+        year: student.year,
+        classRollNo: student.classRollNo,
+        universityRollno: student.universityRollno,
+        class10: student.class10,
+        class12: student.class12,
+        graduation: student.graduation,
+        projects: student.projects,
+        about: student.about,
+        objective: student.objective,
+        experience: student.experience,
+        skills: student.skills,
+        dateOfBirth: DOB,
+        linkedInURL: student.linkedInURL,
+        socialLink: student.socialLink
 
     });
-    const [avatar, setAvatar] = useState();
-    const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
-    const { firstName, lastName, email, phone, password, confirmPassword, fathersName, address, classIn, year, classRollNo, universityRollno, class10, class12, graduation, projects, about, objective, experience, skills, linkedInURL, socialLink, dateOfBirth, agree } = user;
+    let url = "/Profile.png";
+    try {
+        url = student.avatar.url;
+    } catch (error) {
+        url = "/Profile.png";
+    }
+    const [avatar, setAvatar] = useState();
+    console.log(avatar);
+    const [avatarPreview, setAvatarPreview] = useState(url);
+
+
+    const { firstName, lastName, email, phone, fathersName, address, classIn, year, classRollNo, universityRollno, class10, class12, graduation, projects, about, objective, experience, skills, linkedInURL, socialLink, dateOfBirth } = user;
     const registerFormSubmit = (e) => {
 
         e.preventDefault();
-        if (password === confirmPassword) {
-            const myForm = new FormData();
-            myForm.append("firstName", firstName);
-            myForm.append("lastName", lastName);
-            myForm.append("email", email);
-            myForm.append("phone", phone);
-            myForm.append("password", password);
-            myForm.append("confirmPassword", confirmPassword);
-            myForm.append("fathersName", fathersName);
-            myForm.append("address", address);
-            myForm.append("classIn", classIn);
-            myForm.append("year", year);
-            myForm.append("classRollNo", classRollNo);
-            myForm.append("universityRollno", universityRollno);
-            myForm.append("class10", class10);
-            myForm.append("class12", class12);
-            myForm.append("graduation", graduation);
-            myForm.append("projects", projects);
-            myForm.append("about", about);
-            myForm.append("objective", objective);
-            myForm.append("experience", experience);
-            myForm.append("avatar", avatar);
-            myForm.append("agree", agree);
-            myForm.append("dateOfBirth", dateOfBirth);
-            myForm.append("skills", skills);
-            myForm.append("linkedInURL", linkedInURL);
-            myForm.append("socialLink", socialLink);
+        const myForm = new FormData();
+        myForm.append("firstName", firstName);
+        myForm.append("lastName", lastName);
+        myForm.append("email", email);
+        myForm.append("phone", phone);
+        myForm.append("fathersName", fathersName);
+        myForm.append("address", address);
+        myForm.append("classIn", classIn);
+        myForm.append("year", year);
+        myForm.append("classRollNo", classRollNo);
+        myForm.append("universityRollno", universityRollno);
+        myForm.append("class10", class10);
+        myForm.append("class12", class12);
+        myForm.append("graduation", graduation);
+        myForm.append("projects", projects);
+        myForm.append("about", about);
+        myForm.append("objective", objective);
+        myForm.append("experience", experience);
+        myForm.append("avatar", avatar);
+        myForm.append("dateOfBirth", dateOfBirth);
+        myForm.append("skills", skills);
+        myForm.append("linkedInURL", linkedInURL);
+        myForm.append("socialLink", socialLink);
 
-            if (error) {
-                alert.error(error);
-                dispatch(clearErrors);
-            }
-            dispatch(registerStudent(myForm));
-
-        } else {
-            return alert.error("Password and Confirm Password is not same");
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors);
         }
+        dispatch(updateStudentProfile(myForm));
 
     };
 
@@ -115,15 +134,16 @@ const SignUpComponent = () => {
         }
     };
 
+
     return (
         <Fragment>
-            <Metadata title="Create Account" />
+            <Metadata title="Update Profile" />
             {loading ? <Loader /> :
                 <div className="container">
                     <div className="row g-0 text-center d-flex">
                         <div className="col">
                             <form encType="multipart/form-data" onSubmit={registerFormSubmit} className="shadow px-xs-0 px-sm-3 px-md-3 px-lg-0 pb-3" style={{ background: '#fffdfd' }} method="post" title="Register With Us.">
-                                <h1 className="display-3 text-center text-secondary mb-3">Create Account</h1>
+                                <h1 className="display-3 text-center text-secondary mb-3">Update Profile</h1>
                                 <div>
                                     <div className="row justify-content-center align-items-center mb-2">
                                         <div className="col-11 col-sm-12 col-md-6 col-lg-5 col-xl-5 col-xxl-5 text-start py-sm-2 py-md-1 mb-3 mb-sm-0">
@@ -146,20 +166,10 @@ const SignUpComponent = () => {
                                         </div>
                                     </div>
                                     <div className="row justify-content-center align-items-center mb-2 p-sm-2 p-md-1">
-                                        <div className="col-11 col-sm-12 col-md-6 col-lg-5 col-xl-5 col-xxl-5 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
-                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="password"><strong>Password</strong><br /><span>*</span></label>
-                                            <input required className="shadow-sm form-control p-sm-2 p-md-1" type="password" placeholder="Create Password" name="password" onChange={registerDataChange} value={password} title="Password" pattern="^[a-zA-Z0-9_.-]*$" minLength={8} maxLength={25} />
-                                        </div>
-                                        <div className="col-11 col-sm-12 col-md-6 col-lg-5 col-xl-5 col-xxl-5 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
-                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="confirmPassword"><strong>Confirm Password</strong><br /><span>*</span></label>
-                                            <input required className="shadow-sm form-control p-sm-2 p-md-1" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={registerDataChange} value={confirmPassword} minLength={8} maxLength={25} pattern="^[a-zA-Z0-9_.-]*$" />
-                                        </div>
-                                    </div>
-                                    <div className="row justify-content-center align-items-center mb-2 p-sm-2 p-md-1">
                                         <div className="col-auto col-sm-12 col-md-12 col-lg-10 col-xl-10 col-xxl-10 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
-                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="profile"><strong>Avatar</strong><br /><span>*</span></label>
-                                            <div className="col-md-5 order-last" style={{ padding: 0 }}><img className="img-fluid" src={avatarPreview} alt="Login Now" /></div>
-                                            <input required className="form-control p-sm-2 p-md-1" type="file" placeholder="Choose Profile Image" name="avatar" onChange={registerDataChange} title="Choose Avatar" accept="image/*" />
+                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="profile"><strong>Profile Icon (Must be less than 1 mb)</strong><br /><span>*</span></label>
+                                            <div className="col-md-5 order-last" style={{ padding: 0 }}><img className="img-fluid" src={avatarPreview} alt="Profile Icon" /></div>
+                                            <input className="form-control p-sm-2 p-md-1" type="file" placeholder="Choose Profile Image" name="avatar" onChange={registerDataChange} title="Choose Avatar" accept="image/*" />
                                         </div>
                                     </div>
                                     <div className="row justify-content-center align-items-center mb-2 p-sm-2 p-md-1">
@@ -259,10 +269,8 @@ const SignUpComponent = () => {
                                 </div>
                                 <div>
                                     <div className="text-center shadow-sm" style={{ padding: 8 }}>
-                                        <div className="form-check form-check-inline">
-                                            <input required name='agree' onChange={registerDataChange} value={agree} className="form-check-input" type="checkbox" id="formCheck-1" />
-                                            <label className="form-check-label" htmlFor="formCheck-1">I Agree to the <a href="#">terms &amp; Conditions</a></label></div>
-                                    </div><button className="btn btn-outline-success text-uppercase fw-bold text-center shadow-sm" type="submit" style={{ width: '227.675px', borderRadius: 20, marginTop: 15, marginRight: 0, marginBottom: 10 }}>Create account</button>
+                                        <button className="btn btn-outline-success text-uppercase fw-bold text-center shadow-sm" type="submit" style={{ width: '227.675px', borderRadius: 20, marginTop: 15, marginRight: 0, marginBottom: 10 }}>Update Profile</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -274,4 +282,4 @@ const SignUpComponent = () => {
     );
 };
 
-export default SignUpComponent;
+export default UpdateProfileComponent;
