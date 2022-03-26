@@ -103,8 +103,7 @@ exports.getEligibleJobs = catchAsyncErrors(async (req, res) => {
 
     req.query.class = [req.student.classIn];
     req.query.approve_reject = ['Approved'];
-    console.log(req);
-    const apiFeature = new ApiFeatures(Job.find({ lastDateToApply: { $gte: new Date() } }).sort({ createdAt: -1 }), req.query)
+    const apiFeature = new ApiFeatures(Job.find({ lastDateToApply: { $gte: new Date() } }).sort({ lastDateToApply: 1 }), req.query)
         .search()
         .filter()
         .eligibilityOR()

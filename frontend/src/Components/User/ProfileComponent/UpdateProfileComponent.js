@@ -77,7 +77,6 @@ const UpdateProfileComponent = () => {
         url = "/Profile.png";
     }
     const [avatar, setAvatar] = useState();
-    console.log(avatar);
     const [avatarPreview, setAvatarPreview] = useState(url);
 
 

@@ -262,8 +262,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
         skills,
         linkedInURL,
         socialLink,
-        address,
-        avatar
+        address
     } = req.body;
 
     const newStudentData = {
@@ -287,16 +286,18 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
         skills,
         linkedInURL,
         socialLink,
-        address,
-        avatar
+        address
     };
-
-    if (req.body.avatar !== "") {
+    if (req.body.avatar !== "undefined") {
         const student = await Student.findById(req.student.id);
 
         const imgID = student.avatar.public_id;
 
-        await cloudinary.v2.uploader.destroy(imgID);
+        try {
+            await cloudinary.v2.uploader.destroy(imgID);
+        } catch (error) {
+            console.log(error.message);
+        }
 
         const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: "avatars",
@@ -306,10 +307,18 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
             gravity: "face"
         });
 
-        newStudentData.avatar = {
-            public_id: myCloud.public_id,
-            url: myCloud.secure_url,
-        };
+        try {
+            newStudentData.avatar = {
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url,
+            };
+        } catch (error) {
+            console.log(error.message);
+            newStudentData.avatar = {
+                public_id: "myCloud.public_id",
+                url: "myCloud.secure_url",
+            };
+        }
     }
 
     const student = await Student.findByIdAndUpdate(req.student.id, newStudentData, {

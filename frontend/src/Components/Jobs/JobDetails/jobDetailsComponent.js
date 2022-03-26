@@ -42,7 +42,7 @@ const JobDetailsComponent = () => {
                                     <p>{job.companyDescription}</p>
                                 </div>
                                 <div className="shadow" style={{ padding: "5px", borderRadius: "4px", marginBottom: "8px", background: "#3a6b35", color: "#fee715" }}><label className="form-label"><strong>Skills Required</strong></label>
-                                    <p>Javascript, NodeJs, MongoDb, Express, ReactJs, CSS, Figma</p>
+                                    <p>{job.skillsRequired}</p>
                                 </div>
                                 <div style={{ padding: "5px", background: "var(--bs-gray-300)", borderRadius: "4px", marginBottom: "8px" }}><label className="form-label"><strong>Documents Required At Interview</strong></label>
                                     <p>{job.docsRequiredAtInterview}</p>
@@ -100,7 +100,7 @@ const JobDetailsComponent = () => {
                                     </div>
                                 </div>
                                 <div style={{ marginBottom: "8px", padding: "5px" }}><label className="form-label"><strong>Job Description</strong></label>
-                                    <p>{job.jobDescription}</p>
+                                    <pre>{job.jobDescription}</pre>
                                 </div>
                             </div>
                         </div>
