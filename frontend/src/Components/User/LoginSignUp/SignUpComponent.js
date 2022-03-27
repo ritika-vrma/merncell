@@ -156,10 +156,13 @@ const SignUpComponent = () => {
                                         </div>
                                     </div>
                                     <div className="row justify-content-center align-items-center mb-2 p-sm-2 p-md-1">
-                                        <div className="col-auto col-sm-12 col-md-12 col-lg-10 col-xl-10 col-xxl-10 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
+                                        <div className="col-11 col-sm-12 col-md-6 col-lg-5 col-xl-5 col-xxl-5 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
                                             <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="profile"><strong>Avatar</strong><br /><span>*</span></label>
-                                            <div className="col-md-5 order-last" style={{ padding: 0 }}><img className="img-fluid" src={avatarPreview} alt="Login Now" /></div>
+                                            <div className="text-center" style={{ padding: 0}}><img className="img-fluid" style={{height:"150px", width:"auto"}} src={avatarPreview} alt="Avatar" /></div>
+                                        </div>
+                                        <div className="col-11 col-sm-12 col-md-6 col-lg-5 col-xl-5 col-xxl-5 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
                                             <input required className="form-control p-sm-2 p-md-1" type="file" placeholder="Choose Profile Image" name="avatar" onChange={registerDataChange} title="Choose Avatar" accept="image/*" />
+
                                         </div>
                                     </div>
                                     <div className="row justify-content-center align-items-center mb-2 p-sm-2 p-md-1">
@@ -174,7 +177,7 @@ const SignUpComponent = () => {
                                     </div>
                                     <div className="row justify-content-center align-items-center mb-2 p-sm-2 p-md-1">
                                         <div className="col-11 col-sm-12 col-md-6 col-lg-5 col-xl-5 col-xxl-5 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
-                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="classIn" title="Pursuing Class"><strong>Class</strong><span>*</span></label>
+                                            <label className="form-label p-sm-2 p-md-1" htmlFor="classIn" title="Pursuing Class"><strong>Class</strong><span>*</span></label>
                                             <select required className="shadow-sm form-select" name="classIn" onChange={registerDataChange} value={classIn}>
                                                 <option></option>
                                                 <option>BCA</option>
@@ -184,7 +187,7 @@ const SignUpComponent = () => {
                                             </select>
                                         </div>
                                         <div className="col-11 col-sm-12 col-md-6 col-lg-5 col-xl-5 col-xxl-5 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
-                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="year" title="Year of Study"><strong>Year</strong><span>*</span></label>
+                                            <label className="form-label p-sm-2 p-md-1" htmlFor="year" title="Year of Study"><strong>Year</strong><span>*</span></label>
                                             <select required className="shadow-sm form-select" name="year" onChange={registerDataChange} value={year}>
                                                 <option ></option>
                                                 <option >1st year</option>
@@ -204,10 +207,10 @@ const SignUpComponent = () => {
                                     </div>
                                     <div className="row justify-content-center align-items-center mb-2 p-sm-2 p-md-1">
                                         <div className="col-11 col-sm-12 col-md-6 col-lg-5 col-xl-5 col-xxl-5 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
-                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="class10" title="Class 10th"><strong>Class 10th</strong><span>*</span></label>
+                                            <label className="form-label p-sm-2 p-md-1" htmlFor="class10" title="Class 10th"><strong>Class 10th</strong><span>*</span></label>
                                             <input required className="shadow-sm form-control p-sm-2 p-md-1" type="text" placeholder="92% or 9.2 CGPA" name="class10" onChange={registerDataChange} value={class10} title="Class 10th Marks" /></div>
                                         <div className="col-11 col-sm-12 col-md-6 col-lg-5 col-xl-5 col-xxl-5 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
-                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="class12"><strong>Class 12th</strong><br /><span>*</span></label>
+                                            <label className="form-label p-sm-2 p-md-1" htmlFor="class12"><strong>Class 12th</strong><span>*</span></label>
                                             <input required className="form-control p-sm-2 p-md-1" type="text" placeholder="92% or 9.2 CGPA" name="class12" onChange={registerDataChange} value={class12} minLength={2} maxLength={8} title="Class 12th Marks" /></div>
                                     </div>
 
@@ -240,19 +243,19 @@ const SignUpComponent = () => {
 
                                     <div className="row justify-content-center align-items-center mb-2 p-sm-2 p-md-1">
                                         <div className="col-11 col-sm-12 col-lg-10 col-xl-10 col-xxl-10 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
-                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="about"><strong>About</strong><br /><span>*</span></label>
+                                            <label className="form-label p-sm-2 p-md-1" htmlFor="about"><strong>About</strong><span>*</span></label>
                                             <textarea required className="shadow-sm form-control p-sm-2 p-md-1" placeholder="Tell us About yourself in 80 To 350 Words" name="about" onChange={registerDataChange} value={about} minLength={80} maxLength={500} />
                                         </div>
                                     </div>
                                     <div className="row justify-content-center align-items-center mb-2 p-sm-2 p-md-1">
                                         <div className="col-11 col-sm-12 col-lg-10 col-xl-10 col-xxl-10 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
-                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="objective"><strong>Objective</strong><br /><span>*</span></label>
+                                            <label className="form-label p-sm-2 p-md-1" htmlFor="objective"><strong>Objective</strong><span>*</span></label>
                                             <textarea required className="shadow-sm form-control p-sm-2 p-md-1" placeholder="Tell us about Objective" name="objective" onChange={registerDataChange} value={objective} minLength={80} maxLength={500} />
                                         </div>
                                     </div>
                                     <div className="row justify-content-center align-items-center mb-2 p-sm-2 p-md-1">
                                         <div className="col-11 col-sm-12 col-lg-10 col-xl-10 col-xxl-10 text-start p-sm-2 p-md-1 mb-3 mb-sm-0">
-                                            <label className="form-label p-sm-2 p-md-1 d-none d-sm-flex" htmlFor="experience"><strong>Experience (if any)</strong><br /></label>
+                                            <label className="form-label p-sm-2 p-md-1" htmlFor="experience"><strong>Experience (if any)</strong></label>
                                             <textarea className="shadow-sm form-control p-sm-2 p-md-1" placeholder="Tell us about Experience" name="experience" onChange={registerDataChange} value={experience} />
                                         </div>
                                     </div>
@@ -261,8 +264,10 @@ const SignUpComponent = () => {
                                     <div className="text-center shadow-sm" style={{ padding: 8 }}>
                                         <div className="form-check form-check-inline">
                                             <input required name='agree' onChange={registerDataChange} value={agree} className="form-check-input" type="checkbox" id="formCheck-1" />
-                                            <label className="form-check-label" htmlFor="formCheck-1">I Agree to the <a href="#">terms &amp; Conditions</a></label></div>
-                                    </div><button className="btn btn-outline-success text-uppercase fw-bold text-center shadow-sm" type="submit" style={{ width: '227.675px', borderRadius: 20, marginTop: 15, marginRight: 0, marginBottom: 10 }}>Create account</button>
+                                            <label className="form-check-label" htmlFor="formCheck-1">I Agree to the <a href="#">terms &amp; Conditions</a></label>
+                                        </div>
+                                    </div>
+                                    <button className="btn btn-outline-success text-uppercase fw-bold text-center shadow-sm" type="submit" style={{ width: '227.675px', borderRadius: 20, marginTop: 15, marginRight: 0, marginBottom: 10 }}>Create account</button>
                                 </div>
                             </form>
                         </div>

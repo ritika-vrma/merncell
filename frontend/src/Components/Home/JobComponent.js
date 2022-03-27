@@ -55,7 +55,7 @@ const JobComponent = ({ job, lastDateToApply }) => {
               <div className="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 col-xxl-11" style={{ "padding": "5px 12px", "paddingLeft": "0px", "background": "var(--bs-gray-300)", "borderWidth": "0.5px", "borderStyle": "none", "margin": "2px 5px", "borderRadius": "4px" }}>
                 <h6 className="text-start" style={{ "margin": "0px", "paddingLeft": "5px" }}><strong>Skills Required</strong></h6>
                 <div className="text-start">
-                  <p style={{ "padding": "5px" }}>{job.skillsRequired}</p>
+                  <p className='text-break' style={{ "padding": "5px" }}>{job.skillsRequired}</p>
                 </div>
               </div>
             </div>

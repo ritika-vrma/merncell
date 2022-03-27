@@ -6,6 +6,12 @@ import { useAlert } from 'react-alert';
 import Loader from '../../Layouts/Loader/Loader';
 import { createNewJob } from '../../../actions/jobAction';
 import Metadata from '../../Layouts/Metadata';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 const CreateJob = () => {
     const dispatch = useDispatch();
@@ -154,27 +160,22 @@ const CreateJob = () => {
 
         ));
 
-        // console.log(myForm.get("companyName"));
-        // console.log(myForm.get("companyEmail"));
-        // console.log(myForm.get("companyContactPerson"));
-        // console.log(myForm.get("contactPersonPhone"));
-        // console.log(myForm.get("CompanyWebsite"));
-        // console.log(myForm.get("companyAddress"));
-        // console.log(myForm.get("companyAbout"));
-        // console.log(myForm.get("jobRole"));
-        // console.log(myForm.get("candidatesRequired"));
-        // console.log(myForm.get("jobDescription"));
-        // console.log(myForm.get("skillsRequired"));
-        // console.log(myForm.get("lastDateToApply"));
-        // console.log(myForm.get("salaryPM"));
-        // console.log(myForm.get("additionalDetails"));
-        // console.log(myForm.get("docsRequiredAtInterview"));
-        // console.log(myForm.get("docsRequiredAtJoining"));
-        // console.log(myForm.get("eligibility"));
-        // console.log(myForm.get("class"));
-        // console.log(myForm.get("jobType"));
-        // console.log(myForm.get("salaryType"));
+    };
 
+    const [open, setOpen] = useState(false);
+    const [agree, setAgree] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+        setAgree(false);
+    };
+
+    const handleAgree = () => {
+        setAgree(true);
+        setOpen(false);
     };
 
 
@@ -306,10 +307,36 @@ const CreateJob = () => {
                                         <textarea className="form-control" placeholder="Any Documnets Required at Joining time" onChange={registerData} value={docsRequiredAtJoining} name="docsRequiredAtJoining" required /></div>
                                 </div>
                             </div>
-                            <div><button className="btn btn-outline-success text-uppercase fw-bold text-center shadow-sm" type="submit" style={{ width: '227.675px', borderRadius: 20, marginTop: 15, marginRight: 0, marginBottom: 10 }}>submit</button></div>
+                            <div>
+                                <div className="text-center shadow-sm" style={{ padding: 8 }}>
+                                    <div className="form-check form-check-inline">
+                                        <input required name='agree' checked={agree} onChange={handleClickOpen} className="form-check-input" type="checkbox" id="formCheck-1" />
+                                        <label className="form-check-label" htmlFor="formCheck-1">I Agree to the <a href="#">terms &amp; Conditions</a></label>
+                                    </div>
+                                </div>
+                                <button className="btn btn-outline-success text-uppercase fw-bold text-center shadow-sm" type="submit" style={{ width: '227.675px', borderRadius: 20, marginTop: 15, marginRight: 0, marginBottom: 10 }}>submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>
+
+                <Dialog open={open} onClose={handleClose} scroll={"paper"} aria-labelledby="scroll-dialog-title" aria-describedby="scroll-dialog-description">
+                    <DialogTitle id="scroll-dialog-title">Terms & Conditions</DialogTitle>
+                    <DialogContent dividers>
+                        <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ab quasi culpa consequuntur blanditiis nobis maiores optio. Architecto, commodi illo. Facere veritatis quos illum repudiandae dolores consequatur odit harum soluta autem suscipit qui omnis fuga, inventore aperiam excepturi quis, fugit ad, non accusamus! Vitae, nobis rem. Ea ducimus reprehenderit, eligendi numquam saepe vel eos dolores quasi dolorem doloribus tempora aliquam nam fuga dolorum dolore quod veniam, odit magnam, reiciendis recusandae et obcaecati necessitatibus ex? Est rerum assumenda, ratione dolorem quasi iure expedita, molestias enim quis soluta ducimus? Debitis quidem numquam iusto expedita maiores, accusamus neque officia repellendus veritatis animi, sapiente voluptatem assumenda laboriosam cum dolore placeat consectetur. Eum aut sapiente cumque perspiciatis tempora ducimus similique iure hic necessitatibus, nihil illo minima exercitationem autem ullam. Consequuntur quos, harum, voluptate pariatur explicabo nulla dolorum labore placeat impedit quas, eligendi eum. Omnis, nam? Et eaque dolor dolores maxime placeat quisquam quos quidem numquam ducimus. At minima quibusdam nam nihil laudantium assumenda iste, itaque unde! Repudiandae ullam nesciunt nulla consectetur tempore quis eveniet ratione praesentium molestias temporibus, aliquam illo omnis accusantium ad excepturi error veritatis eius sunt odio aspernatur. Pariatur nisi modi ratione tempore eaque esse commodi quos necessitatibus earum consectetur? Quam quia nam ab! Ipsa, magni laboriosam laudantium fugit corrupti voluptates eveniet atque dolor et nostrum quia dolorem dicta neque distinctio doloribus minima commodi totam voluptatibus obcaecati! Consequuntur accusamus molestiae tempora itaque a voluptatibus, ex alias mollitia, numquam ipsam velit tempore, praesentium illum. Unde voluptas quia nemo, soluta, atque cumque mollitia aspernatur suscipit officiis quam exercitationem nostrum repellat iste eum rerum sit tenetur minima quibusdam magni. Magni vel reiciendis harum velit repellendus veritatis deserunt ullam culpa vitae suscipit, consequatur assumenda dolorem! Nulla error sequi necessitatibus eum maxime nostrum et labore sapiente laudantium voluptatem, sunt vitae, veritatis eius officia vero quo, ullam iusto distinctio incidunt asperiores harum sint? Tempora porro nesciunt quam deleniti. Facere laudantium eius quia inventore ab laborum reprehenderit natus dolores obcaecati, praesentium distinctio eveniet quasi debitis ipsum facilis dolore eum saepe vel? Cupiditate officiis sunt, non voluptates officia perspiciatis a distinctio nihil molestiae, recusandae voluptate assumenda debitis pariatur autem deleniti molestias rem beatae fugit nam at, doloremque deserunt qui ducimus aperiam. Praesentium, a voluptates doloremque dignissimos nulla modi incidunt voluptatem quas inventore libero! Accusamus cum fugit amet, rerum suscipit iure qui! Incidunt amet totam eius dolor non necessitatibus repellendus sequi minima asperiores odit, labore quibusdam nulla facere sapiente veritatis esse placeat. Possimus nam, ea beatae, molestiae dolor eos maiores quas eligendi asperiores voluptatem fugit aspernatur! Ab sequi debitis asperiores sint quia reiciendis quo illo et earum obcaecati similique voluptate voluptatem quisquam dolorem ratione quaerat magni officiis itaque nulla, voluptates dolorum officia architecto, a placeat. Possimus numquam doloremque, est impedit libero minima repudiandae tempora natus eius voluptatibus placeat in optio adipisci maxime deleniti quisquam obcaecati. Sint expedita id, animi, sequi quam unde, libero illum nulla ut porro ullam ab? Tempore aspernatur porro officiis dolorum reprehenderit ipsam soluta non laudantium est ut! Eveniet accusantium, eligendi consequatur laboriosam totam illo ipsa doloribus? Laboriosam, nam.
+                        </DialogContentText>
+
+
+
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Disagree</Button>
+                        <Button onClick={handleAgree}>Agree</Button>
+                    </DialogActions>
+                </Dialog>
+
+
             </div>
 
         </Fragment>
