@@ -3,7 +3,7 @@ import React from 'react';
 const ForgotPassword = () => {
     return (
         <div>
-            Forgot Password is the new function to be added
+            we will add forgot password later on..
         </div>
     );
 };
