@@ -2,7 +2,8 @@ import {
     LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL, CLEAR_ERRORS, REGISTER_STUDENT_REQUEST, REGISTER_STUDENT_SUCCESS,
     REGISTER_STUDENT_FAIL, LOAD_STUDENT_REQUEST, LOAD_STUDENT_SUCCESS, LOAD_STUDENT_FAIL,
     LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAIL,
-    UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_RESET, UPDATE_PROFILE_FAIL
+    UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_FAIL,
+    UPDATE_PASSWORD_REQUEST, UPDATE_PASSWORD_SUCCESS, UPDATE_PASSWORD_FAIL,
 } from "../constants/studentConstants";
 import axios from 'axios';
 import { getAllJobs } from "./jobAction";
@@ -93,6 +94,23 @@ export const updateStudentProfile = (studentData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAIL,
+            payload: error.response.data.message
+        });
+    }
+};
+
+export const updateStudentPassword = (passwords) => async (dispatch) => {
+
+    try {
+        dispatch({ type: UPDATE_PASSWORD_REQUEST });
+
+        const config = { headers: { "Content-Type": "application/json" } };
+        const { data } = await axios.put(`/api/v1/password/update`, passwords, config);
+        dispatch({ type: UPDATE_PASSWORD_SUCCESS, payload: data.success });
+
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PASSWORD_FAIL,
             payload: error.response.data.message
         });
     }

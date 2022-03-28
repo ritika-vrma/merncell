@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Metadata from '../../Layouts/Metadata';
 import Dialog from '@mui/material/Dialog';
@@ -8,9 +8,33 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import { useAlert } from 'react-alert';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadStudent, updateStudentPassword } from '../../../actions/studentAction';
+import { UPDATE_PASSWORD_RESET } from '../../../constants/studentConstants';
 
 const ProfileComponent = ({ isAuthenticated, loading, student }) => {
     const alert = useAlert();
+    const dispatch = useDispatch();
+
+    const { error, isUpdated } = useSelector((state) => state.updateStudentProfileReducer);
+
+    //* UseEffect is for UpdatePassword.
+    useEffect(() => {
+        if (error) {
+            alert.error(error);
+        }
+        if (isUpdated) {
+            alert.success("Password Updated Successfully");
+            dispatch(loadStudent());
+
+            dispatch({
+                type: UPDATE_PASSWORD_RESET,
+            });
+        }
+    }, [dispatch, alert, isUpdated, error]);
+
+
+    //* This DOB is for Profile view
     let dateOfBirth;
     let createdAt;
     if (student) {
@@ -18,6 +42,7 @@ const ProfileComponent = ({ isAuthenticated, loading, student }) => {
         createdAt = new Date(student.createdAt).toDateString();
     }
 
+    //* On Open & passwords is for Update Password Dialog Box.
     const [open, setOpen] = useState(false);
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -43,7 +68,13 @@ const ProfileComponent = ({ isAuthenticated, loading, student }) => {
     const handleForgotBtn = () => {
         if (newPassword === confirmPassword && newPassword !== "") {
             setOpen(false);
-            console.log(newPassword + " " + confirmPassword);
+            const myForm = new FormData();
+            myForm.append("oldPassword", oldPassword);
+            myForm.append("newPassword", newPassword);
+            myForm.append("confirmPassword", confirmPassword);
+
+            dispatch(updateStudentPassword(myForm));
+
         } else {
             alert.error("New Password and Confirm Password does not Match");
         }
